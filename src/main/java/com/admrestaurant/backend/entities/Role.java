@@ -1,4 +1,4 @@
-package com.admrestaurant.backend.domain;
+package com.admrestaurant.backend.entities;
 
 public enum Role {
   FUNCIONARIO,
