@@ -31,11 +31,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users",
-        indexes = {
-       @Index(name = "idx_email", columnList = "email", unique = true)
-    }
-)
+@Table
 @SequenceGenerator(name = "seq_users", sequenceName = "seq_users", allocationSize = 1)
 public class User implements UserDetails {
     @Id
