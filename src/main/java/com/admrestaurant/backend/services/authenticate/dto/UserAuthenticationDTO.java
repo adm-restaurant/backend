@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class UserAuthenticationDTO {
     private String password;
-    private String nome;
+    private String name;
 }
