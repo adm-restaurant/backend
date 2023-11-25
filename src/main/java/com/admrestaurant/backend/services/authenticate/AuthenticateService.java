@@ -23,16 +23,21 @@ public class AuthenticateService {
   private final JwtTokenService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public JwtResponseDTO register(UserAuthenticationDTO dto) throws Exception {
+  public JwtResponseDTO register(UserAuthenticationDTO dto) {
 
     if (userRepository.existsByName(dto.getName())) {
-      throw new IllegalArgumentException("Email already exists");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
+    }
+
+    if (dto.getRole() == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role is required");
     }
 
     String passwordHash = passwordEncoder.encode(dto.getPassword());
 
     User user = User.builder()
         .name(dto.getName())
+        .role(dto.getRole())
         .password(passwordHash)
         .status(Status.ACTIVE)
         .build();

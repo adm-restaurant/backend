@@ -23,12 +23,12 @@ public class AuthenticateResource {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<JwtResponseDTO> signup(@RequestBody UserAuthenticationDTO userAuthenticationDTO) throws Exception {
+    public ResponseEntity<JwtResponseDTO> signup(@RequestBody UserAuthenticationDTO userAuthenticationDTO) {
       return ResponseEntity.ok(authenticateService.register(userAuthenticationDTO));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<JwtResponseDTO> update(@RequestBody UserAuthenticationDTO userAuthenticationDTO) throws Exception {
+    public ResponseEntity<JwtResponseDTO> update(@RequestBody UserAuthenticationDTO userAuthenticationDTO) {
       return ResponseEntity.ok(authenticateService.update(userAuthenticationDTO));
     }
 }
