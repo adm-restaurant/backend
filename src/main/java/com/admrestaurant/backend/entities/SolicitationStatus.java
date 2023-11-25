@@ -2,5 +2,9 @@ package com.admrestaurant.backend.entities;
 
 
 public enum SolicitationStatus {
-    PROGRESS, DONE, CANCELED
+
+    SOLICITATION,
+    PRODUCT_PREPARATION,
+    DONE,
+    CANCELED
 }
