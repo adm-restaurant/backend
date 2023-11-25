@@ -46,7 +46,7 @@ public class DatabaseConfiguration {
         LocalContainerEntityManagerFactoryBean em
             = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.admrestaurant.backend.domain");
+        em.setPackagesToScan("com.admrestaurant.backend.entities");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

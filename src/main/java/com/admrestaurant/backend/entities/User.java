@@ -32,7 +32,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table
-@SequenceGenerator(name = "seq_users", sequenceName = "seq_users", allocationSize = 1)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
