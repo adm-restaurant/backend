@@ -7,6 +7,7 @@ import com.admrestaurant.backend.security.JwtTokenService;
 import com.admrestaurant.backend.services.authenticate.dto.JwtResponseDTO;
 import com.admrestaurant.backend.services.authenticate.dto.UserAuthenticationDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +36,7 @@ public class AuthenticateService {
         .password(passwordHash)
         .status(Status.ACTIVE)
         .build();
-    userRepository.save(user);
+    user = userRepository.save(user);
     String jwt = jwtService.generateToken(user);
     return JwtResponseDTO.builder().token(jwt).build();
   }
@@ -43,30 +44,29 @@ public class AuthenticateService {
   public JwtResponseDTO login(UserAuthenticationDTO dto) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(dto.getName(), dto.getPassword()));
-    User user = userRepository.findByName(dto.getName())
-        .orElseThrow(() -> new IllegalArgumentException("Invalid email"));
+    User user = userRepository.findByName(dto.getName()).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + dto.getId())
+    );
     String jwt = jwtService.generateToken(user);
-    return JwtResponseDTO.builder().token(jwt).build();
+    return JwtResponseDTO.builder().token(jwt).id(user.getId()).build();
   }
 
-  public JwtResponseDTO update(UserAuthenticationDTO userAuthenticationDTO) {
-    User user = userRepository.findById(userAuthenticationDTO.getId()).orElseThrow(
+  public JwtResponseDTO update(UserAuthenticationDTO dto) {
+    User user = userRepository.findById(dto.getId()).orElseThrow(
         () -> new ResponseStatusException(
-            org.springframework.http.HttpStatus.NOT_FOUND,
-            "User not found with id: " + userAuthenticationDTO.getId()
-        ) {
-        }
+            HttpStatus.NOT_FOUND,
+            "User not found with id: " + dto.getId()
+        )
     );
 
-    user.setName(userAuthenticationDTO.getName());
+    user.setName(dto.getName());
 
-    if (userAuthenticationDTO.getPassword() != null) {
-      String passwordHash = passwordEncoder.encode(userAuthenticationDTO.getPassword());
+    if (dto.getPassword() != null) {
+      String passwordHash = passwordEncoder.encode(dto.getPassword());
       user.setPassword(passwordHash);
     }
 
     userRepository.save(user);
-
     String jwt = jwtService.generateToken(user);
 
     return JwtResponseDTO.builder().token(jwt).build();

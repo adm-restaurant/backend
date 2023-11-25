@@ -8,5 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Builder
 public class JwtResponseDTO {
+	private final Long id;
 	private final String token;
 }
