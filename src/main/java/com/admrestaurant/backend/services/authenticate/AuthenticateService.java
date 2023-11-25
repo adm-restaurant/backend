@@ -1,8 +1,8 @@
 package com.admrestaurant.backend.services.authenticate;
 
-import com.admrestaurant.backend.entities.Status;
 import com.admrestaurant.backend.entities.User;
 import com.admrestaurant.backend.repository.UserRepository;
+import com.admrestaurant.backend.resources.user.mapper.UserMapper;
 import com.admrestaurant.backend.security.JwtTokenService;
 import com.admrestaurant.backend.services.authenticate.dto.JwtResponseDTO;
 import com.admrestaurant.backend.services.authenticate.dto.UserAuthenticationDTO;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,6 +28,11 @@ public class AuthenticateService {
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + dto.getId())
     );
     String jwt = jwtService.generateToken(user);
-    return JwtResponseDTO.builder().token(jwt).id(user.getId()).build();
+    return JwtResponseDTO.builder()
+        .id(user.getId())
+        .name(user.getName())
+        .role(user.getRole())
+        .token(jwt)
+        .build();
   }
 }
