@@ -32,6 +32,7 @@ public class SecurityConfiguration {
 
     private final String[] AUTH_WHITELIST = {
         "/api/auth/**",
+        "/api/user/register",
         "/error"
     };
 
