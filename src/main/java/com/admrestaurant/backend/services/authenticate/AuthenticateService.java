@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class AuthenticateService {
   private final JwtTokenService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public JwtResponseDTO signup(UserAuthenticationDTO dto) throws Exception {
+  public JwtResponseDTO register(UserAuthenticationDTO dto) throws Exception {
 
     if (userRepository.existsByName(dto.getName())) {
       throw new IllegalArgumentException("Email already exists");
@@ -39,12 +40,35 @@ public class AuthenticateService {
     return JwtResponseDTO.builder().token(jwt).build();
   }
 
-  public JwtResponseDTO signin(UserAuthenticationDTO dto) {
+  public JwtResponseDTO login(UserAuthenticationDTO dto) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(dto.getName(), dto.getPassword()));
     User user = userRepository.findByName(dto.getName())
         .orElseThrow(() -> new IllegalArgumentException("Invalid email"));
     String jwt = jwtService.generateToken(user);
+    return JwtResponseDTO.builder().token(jwt).build();
+  }
+
+  public JwtResponseDTO update(UserAuthenticationDTO userAuthenticationDTO) {
+    User user = userRepository.findById(userAuthenticationDTO.getId()).orElseThrow(
+        () -> new ResponseStatusException(
+            org.springframework.http.HttpStatus.NOT_FOUND,
+            "User not found with id: " + userAuthenticationDTO.getId()
+        ) {
+        }
+    );
+
+    user.setName(userAuthenticationDTO.getName());
+
+    if (userAuthenticationDTO.getPassword() != null) {
+      String passwordHash = passwordEncoder.encode(userAuthenticationDTO.getPassword());
+      user.setPassword(passwordHash);
+    }
+
+    userRepository.save(user);
+
+    String jwt = jwtService.generateToken(user);
+
     return JwtResponseDTO.builder().token(jwt).build();
   }
 }
