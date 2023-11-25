@@ -2,7 +2,6 @@ package com.admrestaurant.backend.services.authenticate;
 
 import com.admrestaurant.backend.entities.User;
 import com.admrestaurant.backend.repository.UserRepository;
-import com.admrestaurant.backend.resources.user.mapper.UserMapper;
 import com.admrestaurant.backend.security.JwtTokenService;
 import com.admrestaurant.backend.services.authenticate.dto.JwtResponseDTO;
 import com.admrestaurant.backend.services.authenticate.dto.UserAuthenticationDTO;

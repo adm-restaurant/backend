@@ -32,7 +32,6 @@ public class Product {
     @Column(name = "preco")
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @Column(name = "categoria")
     private Category category;
 }

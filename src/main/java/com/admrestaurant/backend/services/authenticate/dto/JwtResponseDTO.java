@@ -1,7 +1,7 @@
 package com.admrestaurant.backend.services.authenticate.dto;
 
 import com.admrestaurant.backend.entities.Role;
-import com.admrestaurant.backend.resources.user.dto.UserDTO;
+import com.admrestaurant.backend.services.user.dto.UserDTO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

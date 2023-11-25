@@ -1,6 +1,6 @@
 package com.admrestaurant.backend.resources.user;
 
-import com.admrestaurant.backend.resources.user.dto.UserDTO;
+import com.admrestaurant.backend.services.user.dto.UserDTO;
 import com.admrestaurant.backend.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

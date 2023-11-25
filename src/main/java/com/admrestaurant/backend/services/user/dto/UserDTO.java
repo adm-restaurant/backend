@@ -1,4 +1,4 @@
-package com.admrestaurant.backend.resources.user.dto;
+package com.admrestaurant.backend.services.user.dto;
 
 import com.admrestaurant.backend.entities.Role;
 import lombok.AllArgsConstructor;
