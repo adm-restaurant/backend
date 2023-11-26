@@ -1,5 +1,6 @@
 package com.admrestaurant.backend.resources.product;
 
+import com.admrestaurant.backend.entities.Category;
 import com.admrestaurant.backend.services.product.ProductService;
 import com.admrestaurant.backend.services.product.dto.ProductDTO;
 import java.util.List;
@@ -22,6 +23,13 @@ public class ProductResource {
   @GetMapping("/all")
   public List<ProductDTO> findAll() {
     return this.productService.findAll();
+  }
+
+  @GetMapping("/{category}")
+  public List<ProductDTO> findByCategory(
+      @PathVariable Category category
+  ) {
+    return this.productService.findByCategory(category);
   }
 
   @PostMapping

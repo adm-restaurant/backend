@@ -1,5 +1,6 @@
 package com.admrestaurant.backend.services.product;
 
+import com.admrestaurant.backend.entities.Category;
 import com.admrestaurant.backend.repository.ProductRepository;
 import com.admrestaurant.backend.services.product.dto.ProductDTO;
 import com.admrestaurant.backend.services.product.mapper.ProductMapper;
@@ -28,4 +29,10 @@ public class ProductService {
          .map(this.productMapper::toDTO)
          .toList();
    }
+
+  public List<ProductDTO> findByCategory(Category category) {
+    return this.productRepository.findByCategory(category).stream()
+        .map(this.productMapper::toDTO)
+        .toList();
+  }
 }
