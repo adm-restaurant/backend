@@ -2,8 +2,10 @@ package com.admrestaurant.backend.resources.product;
 
 import com.admrestaurant.backend.services.product.ProductService;
 import com.admrestaurant.backend.services.product.dto.ProductDTO;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductResource {
   private final ProductService productService;
+
+  @GetMapping
+  public List<ProductDTO> findAll() {
+    return this.productService.findAll();
+  }
 
   @PostMapping
   public ProductDTO create(

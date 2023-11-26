@@ -3,6 +3,7 @@ package com.admrestaurant.backend.services.product;
 import com.admrestaurant.backend.repository.ProductRepository;
 import com.admrestaurant.backend.services.product.dto.ProductDTO;
 import com.admrestaurant.backend.services.product.mapper.ProductMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,11 @@ public class ProductService {
 
    public void delete(Long id) {
      this.productRepository.deleteById(id);
+   }
+
+   public List<ProductDTO> findAll() {
+     return this.productRepository.findAll().stream()
+         .map(this.productMapper::toDTO)
+         .toList();
    }
 }
