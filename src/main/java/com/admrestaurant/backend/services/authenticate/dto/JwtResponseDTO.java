@@ -6,17 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @RequiredArgsConstructor
+@SuperBuilder
 public class JwtResponseDTO extends UserDTO {
 	private final String token;
-
-	@Builder
-	public JwtResponseDTO(Long id, String name, String password,
-			Role role, String token) {
-		super(id, name, password, role);
-		this.token = token;
-	}
 }
