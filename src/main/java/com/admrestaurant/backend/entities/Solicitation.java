@@ -41,6 +41,9 @@ public class Solicitation {
     @OneToMany(mappedBy = "solicitation")
     private List<SolicitationProduct> solicitationProducts;
 
+    @Column(name = "nome_cliente")
+    private String clientName;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private User user;
