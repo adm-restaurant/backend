@@ -45,6 +45,7 @@ public class SecurityConfiguration {
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/user").permitAll()
                         .anyRequest().authenticated()
                 )
