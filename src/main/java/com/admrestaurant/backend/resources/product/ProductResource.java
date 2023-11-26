@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductResource {
   private final ProductService productService;
 
-  @GetMapping
+  @GetMapping("/all")
   public List<ProductDTO> findAll() {
     return this.productService.findAll();
   }
