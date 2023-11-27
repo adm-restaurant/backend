@@ -11,3 +11,5 @@ insert into public.produto (id, nome, preco, categoria) values (7, 'X-bacon', 5.
 insert into public.produto (id, nome, preco, categoria) values (8, 'X-tudo', 5.00, 'ALIMENTACAO');
 insert into public.produto (id, nome, preco, categoria) values (9, 'X-calota', 5.00, 'ALIMENTACAO');
 insert into public.produto (id, nome, preco, categoria) values (10, 'X-coração', 5.00, 'ALIMENTACAO');
+
+SELECT setval('produto_id_seq', (SELECT max(id) FROM produto));
