@@ -5,6 +5,7 @@ import com.admrestaurant.backend.entities.Solicitation;
 import com.admrestaurant.backend.entities.SolicitationStatus;
 import com.admrestaurant.backend.repository.SolicitationRepository;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,30 @@ public class SolicitationService {
   }
 
   public Solicitation update(Solicitation solicitation) {
-      Solicitation solicitationSaved = solicitationRepository.findById(solicitation.getId()).orElseThrow(
+      Solicitation solicitationForSaved = solicitationRepository.findById(solicitation.getId()).orElseThrow(
           () -> new ResponseStatusException(
               HttpStatus.NOT_FOUND,
               "Solicitation not found with id: " + solicitation.getId()
           )
       );
 
-      if (solicitation.getSolicitationStatus() == SolicitationStatus.DONE || solicitation.getSolicitationStatus() == SolicitationStatus.CANCELED) {
+      if (Objects.equals(solicitationForSaved.getSolicitationStatus(), SolicitationStatus.DONE)
+          ||
+          Objects.equals(solicitationForSaved.getSolicitationStatus(), SolicitationStatus.CANCELED)
+      ) {
         throw new ResponseStatusException(
             HttpStatus.BAD_REQUEST,
             "Solicitation can't be updated"
         );
       }
 
-      solicitationSaved.setSolicitationStatus(solicitation.getSolicitationStatus());
+      solicitationForSaved.setSolicitationStatus(solicitation.getSolicitationStatus());
 
-      return solicitationRepository.save(solicitationSaved);
+      var solicitationSaved = solicitationRepository.save(solicitationForSaved);
+
+      solicitationSaved.setUser(null);
+
+      return solicitationSaved;
 
   }
 
