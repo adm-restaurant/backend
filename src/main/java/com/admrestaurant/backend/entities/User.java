@@ -35,6 +35,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     @Nonnull
     private String name;
+    @Enumerated(EnumType.STRING)
     private Role role;
     @Enumerated(EnumType.STRING)
     private Status status = Status.INACTIVE;

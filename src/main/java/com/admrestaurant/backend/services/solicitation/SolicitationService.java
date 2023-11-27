@@ -20,7 +20,24 @@ public class SolicitationService {
   }
 
   public Solicitation update(Solicitation solicitation) {
-    return solicitationRepository.save(solicitation);
+      Solicitation solicitationSaved = solicitationRepository.findById(solicitation.getId()).orElseThrow(
+          () -> new ResponseStatusException(
+              HttpStatus.NOT_FOUND,
+              "Solicitation not found with id: " + solicitation.getId()
+          )
+      );
+
+      if (solicitation.getSolicitationStatus() == SolicitationStatus.DONE || solicitation.getSolicitationStatus() == SolicitationStatus.CANCELED) {
+        throw new ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Solicitation can't be updated"
+        );
+      }
+
+      solicitationSaved.setSolicitationStatus(solicitation.getSolicitationStatus());
+
+      return solicitationRepository.save(solicitationSaved);
+
   }
 
   public Solicitation create(Solicitation solicitation) {
