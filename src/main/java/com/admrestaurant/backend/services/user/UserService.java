@@ -5,6 +5,7 @@ import com.admrestaurant.backend.entities.User;
 import com.admrestaurant.backend.repository.UserRepository;
 import com.admrestaurant.backend.services.user.dto.UserDTO;
 import com.admrestaurant.backend.services.user.mapper.UserMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,5 +63,9 @@ public class UserService {
 
   public void delete(Long id) {
     userRepository.deleteById(id);
+  }
+
+  public List<UserDTO> findAll() {
+    return userRepository.findAll().stream().map(userMapper::toDTO).toList();
   }
 }
