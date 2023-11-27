@@ -46,7 +46,7 @@ public class Solicitation {
     @Column(name = "nome_cliente")
     private String clientName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "usuario_id")
     private User user;
 }
