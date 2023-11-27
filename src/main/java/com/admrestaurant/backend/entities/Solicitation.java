@@ -1,5 +1,6 @@
 package com.admrestaurant.backend.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,7 +39,8 @@ public class Solicitation {
     @Enumerated(EnumType.STRING)
     private SolicitationStatus solicitationStatus;
 
-    @OneToMany(mappedBy = "solicitation")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "solicitation_product_id")
     private List<SolicitationProduct> solicitationProducts;
 
     @Column(name = "nome_cliente")

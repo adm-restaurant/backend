@@ -24,6 +24,16 @@ public class SolicitationService {
   }
 
   public Solicitation create(Solicitation solicitation) {
+
+    if (solicitation.getSolicitationProducts().isEmpty()) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST,
+          "Solicitation must have at least one product"
+      );
+    }
+    solicitation.setSolicitationStatus(SolicitationStatus.SOLICITATION);
+    solicitation.setUser(SecurityUtils.getCurrentUser());
+
     return solicitationRepository.save(solicitation);
   }
 
