@@ -2,7 +2,7 @@
 
 #### 1. Install dependencies
 ```
- mvn clean install
+ mvn clean install -DskipTests
 ```
 
 #### 2. Up database postgresql
